@@ -6,9 +6,9 @@ namespace bus.Models
 		[JsonProperty("id")]
 		public string Id { get; set; }
 		[JsonProperty("longitude")]
-		public double Longitude { get; set; }
+		public string Longitude { get; set; }
 		[JsonProperty("latitude")]
-		public double Latitude { get; set; }
+		public string Latitude { get; set; }
 		[JsonProperty("symbol")]
 		public string Symbol { get; set; }
 		[JsonProperty("name")]
