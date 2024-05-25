@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using BusWebApp.Models;
+using Newtonsoft.Json;
 
 namespace BusWebApp
 {
