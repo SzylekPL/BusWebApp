@@ -12,9 +12,9 @@ namespace BusWebApp.Models
 		[JsonProperty("nightLine")]
 		public bool NightLine { get; set; }
 	}
-	public class LinesWrapper
+	public class LineWrapper
 	{
 		[JsonProperty("lines")]
-		public Line[] Lines { get; set; }
+		public Line[] Content { get; set; }
 	}
 }
