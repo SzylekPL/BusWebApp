@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace bus.Models
+namespace BusWebApp.Models
 {
 
 	public class Line
@@ -13,9 +13,9 @@ namespace bus.Models
 		public bool NightLine { get; set; }
 		public bool Expanded { get; set; } = false;
 	}
-	public class LinesWrapper
+	public class LineWrapper
 	{
 		[JsonProperty("lines")]
-		public Line[] Lines { get; set; }
+		public Line[] Content { get; set; }
 	}
 }

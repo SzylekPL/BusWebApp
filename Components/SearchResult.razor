@@ -1,0 +1,20 @@
+﻿<div>
+	<input type="text" placeholder="@InputPlaceholder" @bind="InputValue"/>
+	<ul>
+		@foreach (string r in SearchResults.Where(x=>x.Contains(InputValue)))
+		{
+			<li @onclick="">r</li>
+		}
+	</ul>
+</div>
+
+@code {
+	[Parameter]
+	public string InputPlaceholder { get; set; } = "Search...";
+	[Parameter]
+	public string[] SearchResults { get; set; }
+	private string InputValue;
+
+
+
+}

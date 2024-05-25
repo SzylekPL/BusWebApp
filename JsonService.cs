@@ -1,5 +1,4 @@
-﻿using bus.Models;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 
 namespace BusWebApp
 {
@@ -9,6 +8,7 @@ namespace BusWebApp
 		private static bool _initialized = false;
 
 		public static StopPoint[] StopPoints { get; private set; }
+		public static Line[] Lines { get; private set; }
 		public static Vehicle[] Vehicles { get; private set; }
 		public static Dictionary<StopPoint, (string Symbol, string Name, string Street)> SearchTags { get; private set; }
 
@@ -23,6 +23,10 @@ namespace BusWebApp
 			response = await _client.GetAsync("https://rozklady.bielsko.pl/getVehicles.json");
 			content = await response.Content.ReadAsStringAsync();
 			Vehicles = JsonConvert.DeserializeObject<VehicleWrapper>(content).Content;
+
+			response = await _client.GetAsync("https://rozklady.bielsko.pl/getLines.json");
+			content = await response.Content.ReadAsStringAsync();
+			Lines = JsonConvert.DeserializeObject<LineWrapper>(content).Content;
 
 			SearchTags = StopPoints.ToDictionary(x => x, x => ($"Numer: {x.Symbol}", $"Nazwa: {x.Name}", $"Ulica: {x.Street}"));
 	}

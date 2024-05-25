@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace bus.Models
+namespace BusWebApp.Models
 {
 	public class Vehicle
 	{
