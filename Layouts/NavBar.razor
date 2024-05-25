@@ -5,13 +5,13 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarContent">
             <div class="navbar-nav mr-auto">
-                <a href="#" class="nav-link nav-item">Strona główna</a>
-                <a href="#" class="nav-link nav-item active">Przystanki</a>
-                <a href="#" class="nav-link nav-item">Autobusy</a>
-                <a href="#" class="nav-link nav-item">Mapa trasy</a>
+                <a href="/" class="nav-link nav-item">Strona główna</a>
+                <a href="#" class="nav-link nav-item">Przystanki</a>
+                <a href="#" class="nav-link nav-item">Bielty</a>
+                <a href="/LineVisualization" class="nav-link nav-item">Linie</a>
             </div>
             <span class="navbar-text">
-                @today;
+                @DateTime.Today.Date.ToString("yyyy-MM-dd");
             </span>
             <form action="#" class="form-inline">
                 <input type="text" class="form-control mx-2">
@@ -22,5 +22,5 @@
 </nav>
 
 @code {
-    string today = DateTime.Today.Date.ToString("yyyy-MM-dd");
+
 }
