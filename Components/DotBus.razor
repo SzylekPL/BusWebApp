@@ -5,7 +5,7 @@
 		</div>
 		
 		<div class="col-8 text-center">
-			@StopName<br>
+			@StopPoint.Name<br>
 			Godzina odjazdu: 17:40
 		</div>
 	</div>
@@ -13,5 +13,5 @@
 
 @code {
 	[Parameter]
-	public string StopName { get; set; }
+	public StopPoint StopPoint { get; set; }
 }

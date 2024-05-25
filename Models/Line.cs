@@ -11,6 +11,7 @@ namespace bus.Models
 		public string Name { get; set; }
 		[JsonProperty("nightLine")]
 		public bool NightLine { get; set; }
+		public bool Expanded { get; set; } = false;
 	}
 	public class LinesWrapper
 	{
