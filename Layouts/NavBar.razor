@@ -1,0 +1,26 @@
+﻿<nav class="navbar navbar-expand-md navbar-dark bg-dark">
+    <div class="container">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarContent">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarContent">
+            <div class="navbar-nav mr-auto">
+                <a href="/" class="nav-link nav-item">Strona główna</a>
+                <a href="#" class="nav-link nav-item">Przystanki</a>
+                <a href="#" class="nav-link nav-item">Bielty</a>
+                <a href="/LineVisualization" class="nav-link nav-item">Linie</a>
+            </div>
+            <span class="navbar-text">
+                @DateTime.Today.Date.ToString("yyyy-MM-dd");
+            </span>
+            <form action="#" class="form-inline">
+                <input type="text" class="form-control mx-2">
+                <button class="btn btn-light">Szukaj</button>
+            </form>
+        </div>
+    </div>
+</nav>
+
+@code {
+
+}

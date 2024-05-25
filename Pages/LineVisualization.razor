@@ -1,0 +1,63 @@
+﻿@page "/LineVisualization";
+
+
+<div class="container mt-4">
+	<div class="row">
+		<div class="col-8">
+			@foreach (var item in ListaPrzyst)
+			{
+				<div class="border mt-3 p-2">
+					@if (!item.Expanded)
+					{
+						<p class="col-12 mt-3" @onclick="() => PrzelaczRozwiniecie(item)">@item.Name</p>
+					}
+					else
+					{
+						<div class="text-center">
+							<p @onclick="() => PrzelaczRozwiniecie(item)">Linia @item.Name</p><br />
+							<button class="btn btn-primary">Kup bilet</button>
+						</div>
+					}
+				</div>
+			}
+		</div>
+
+
+
+		<div class="col-4">
+			@foreach (var x in lista)
+			{
+				<BusWebApp.Components.DotBus StopName="@x" />
+			}
+		</div>
+	</div>
+</div>
+
+
+@code {
+	List<string> lista = new List<string>() { "Przystanek nr jeden", "Przystanek nr dwa", "Przystanek nr trzy", "Przystanek nr cztery", "Przystanek nr piec", "Przystanek nr szesc" };
+
+	public class Linia
+	{
+		public string Name { get; set; }
+		public bool Expanded { get; set; } = false;
+	}
+
+	private List<Linia> ListaPrzyst = new List<Linia>
+	{
+		new Linia { Name = "Linia 1" },
+		new Linia { Name = "Linia 2" },
+    };
+
+	private void PrzelaczRozwiniecie(Linia item)
+	{
+		bool czyExpandowac = item.Expanded ? false : true;
+		foreach(var g in ListaPrzyst)
+		{
+			g.Expanded = false;
+		}
+		item.Expanded = czyExpandowac;
+
+		//lista = item.Przystanki czy cos (musza sie zmienic kropki po prawej)
+	}
+}
