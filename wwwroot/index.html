@@ -9,7 +9,43 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
     <!-- If you add any scoped CSS files, uncomment the following to load them
     <link href="BusWebApp.styles.css" rel="stylesheet" /> -->
-    
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+        import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyCcFciQPeqJkfEE7sCyAbw7n27eN37NQII",
+            authDomain: "buswebapp-af615.firebaseapp.com",
+            databaseURL: "https://buswebapp-af615-default-rtdb.europe-west1.firebasedatabase.app",
+            projectId: "buswebapp-af615",
+            storageBucket: "buswebapp-af615.appspot.com",
+            messagingSenderId: "306358606133",
+            appId: "1:306358606133:web:317fe64804f3e7ac91547c"
+        };
+
+        const app = initializeApp(firebaseConfig);
+
+        const BuyTicket = () => {
+            
+            const database = getDatabase(app);
+
+            const reference = ref(database, 'tickets/' + "jakisUser");
+
+            set(reference, {
+                username: "",
+                ticketNumber: "",
+                discount: ""
+            });
+
+            console.log("Bilet kupiony");
+        }
+
+        document.addEventListener("click", function (event) {
+            if (event.target.matches('.button-buy-ticket')) {
+                BuyTicket();
+            }
+        });
     </script>
 </head>
 

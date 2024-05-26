@@ -1,4 +1,5 @@
 using BusWebApp;
+using BusWebApp.Models;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 
@@ -11,9 +12,9 @@ internal class Program
 		builder.RootComponents.Add<HeadOutlet>("head::after");
 
 		builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
-
-		await builder.Build().RunAsync();
-
+		
 		await JsonService.Initialize();
+		
+		await builder.Build().RunAsync();
 	}
 }

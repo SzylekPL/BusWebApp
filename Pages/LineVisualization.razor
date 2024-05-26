@@ -1,20 +1,20 @@
 ﻿@page "/LineVisualization";
 
-<div class="container mt-4">
+<div class="container my-4">
 	<div class="row">
 		<div class="col-8">
-			@foreach (var item in linie.Lines)
+			@foreach (var item in linie.Content)
 			{
-				<div class="border mt-3 p-2">
+				<div class="border rounded mt-3">
 					@if (!item.Expanded)
 					{
-						<p class="col-12 mt-3" @onclick="async() => PrzelaczRozwiniecie(item)">@item.Name</p>
+						<div class="col-12 pt-3 p-3" @onclick="async() => await PrzelaczRozwiniecie(item)">Linia @item.Name</div>
 					}
 					else
 					{
 						<div class="text-center">
-							<p @onclick="() => PrzelaczRozwiniecie(item)">Linia @item.Name</p><br />
-							<button class="btn btn-primary">Kup bilet</button>
+							<h3 class="p-2" @onclick="async() => await PrzelaczRozwiniecie(item)">Linia @item.Name</h3><br />
+							<button class="btn btn-primary col-4 mb-3">Kup bilet</button>
 						</div>
 					}
 				</div>
@@ -35,17 +35,27 @@
 
 @code {
 	StopPointWrapper StopPointsToDisplay = new StopPointWrapper() { Content = new StopPoint[] { } };
-	LinesWrapper linie = new LinesWrapper() { Lines = JsonService.Lines };
+	LineWrapper linie = new LineWrapper() { Content = new Line[] { } };
 
-	private async void PrzelaczRozwiniecie(Line item)
+	protected override void OnInitialized()
+	{
+		base.OnInitialized();
+		linie.Content = JsonService.Lines;
+	}
+
+
+	private async Task PrzelaczRozwiniecie(Line item)
 	{
 		bool czyExpandowac = item.Expanded ? false : true;
-		foreach(var g in linie.Lines)
+		Console.WriteLine(czyExpandowac);
+		foreach(var g in linie.Content)
 		{
 			g.Expanded = false;
 		}
 		item.Expanded = czyExpandowac;
-		StopPointsToDisplay.Content = await JsonService.GetStopsByCourse($"{item.Id}", false);
+		StopPointsToDisplay.Content = new StopPoint[] { };
+		if(item.Expanded)
+			StopPointsToDisplay.Content = await JsonService.GetStopsByCourse($"{item.Id}", false);
 	}
 
 }
