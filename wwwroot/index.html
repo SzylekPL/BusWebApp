@@ -12,7 +12,8 @@
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-        import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+        import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js'
+       import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyCcFciQPeqJkfEE7sCyAbw7n27eN37NQII",
@@ -25,6 +26,7 @@
         };
 
         const app = initializeApp(firebaseConfig);
+        const auth = getAuth(); 
 
         const BuyTicket = () => {
             
@@ -41,9 +43,37 @@
             console.log("Bilet kupiony");
         }
 
+        const LogIn = async () => {
+            const login = document.getElementById("LoginEmail").value;
+            const password = document.getElementById("LoginPassword").value;
+            try {
+                const userCredential = await signInWithEmailAndPassword(auth, login, password)
+                console.log(userCredential.user);
+                document.getElementById("LoginError").style.display = "none";
+                document.getElementById("LoginSuccess").style.display = "block";
+            } catch (error) {
+                console.log(error.code);
+                document.getElementById("LoginError").style.display = "block";
+                document.getElementById("LoginSuccess").style.display = "none";
+            }
+
+        }
+
+        const LogOut = async () => {
+            await signOut(auth);
+        }
+
         document.addEventListener("click", function (event) {
             if (event.target.matches('.button-buy-ticket')) {
                 BuyTicket();
+            }
+            else if (event.target.matches('.button-log-in')) {
+                console.log("logowanie");
+                LogIn();
+            }
+            else if (event.target.matches('.button-log-out')) {
+                console.log("wylogowanie");
+                LogOut();
             }
         });
     </script>

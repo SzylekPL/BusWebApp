@@ -1,0 +1,62 @@
+﻿@page "/LoginPage";
+
+<div class="container mt-3">
+    <div class="row">
+        <div class="col-8 offset-2 border rounded pb-4">
+             <ul class="pagination pagination-lg text-center">
+                <li class="page-item page-link col-6" @onclick="() => { logOrRej = true; }">Logowanie</li>
+                <li class="page-item page-link col-6" @onclick="() => { logOrRej = false; }">Rejestrajca</li>
+              </ul>
+            @if (logOrRej)
+            {
+                <h2 class="display-4 text-center">Logowanie</h2>
+                <form action="#">
+                    <div class="form-group">
+                        <label for="LoginEmail">Email</label>
+                        <input type="text" id="LoginEmail" placeholder="Twoj email" class="form-control form-control-lg">
+                    </div>
+                    <div class="form-group">
+                        <label for="LoginPassword">Hasło</label>
+                        <input type="text" placeholder="Twoje hasło" id="LoginPassword" class="form-control form-control-lg">
+                    </div>
+                </form>
+                <button class="btn btn-primary mt-4 col-4 offset-4 button-log-in">Zaloguj</button>
+                <div class="container pt-4" style="display:none;" id="LoginError">
+                    <div class="alert alert-danger" role="alert">
+                        Błędny mail lub hasło!
+                    </div>
+                </div>
+                <div class="container pt-4" style="display:none;" id="LoginSuccess">
+                    <div class="alert alert-info" role="alert">
+                        Pomyslnie zalogowano
+                    </div>
+                </div>
+            }
+            else
+            {
+                <h2 class="display-4 text-center">Rejestracja</h2>
+                <form action="#">
+                    <div class="form-group">
+                        <label for="RegisterEmail">Email</label>
+                        <input type="text" id="RegisterEmail" placeholder="Twoj email" class="form-control form-control-lg">
+                    </div>
+                    <div class="form-group">
+                        <label for="RegisterPassword">Hasło</label>
+                        <input type="text" placeholder="Twoje hasło" id="RegisterPassword" class="form-control form-control-lg">
+                    </div>
+                    <div class="form-check">
+                        <label class="form-check-label">
+                            <input type="checkbox" value="ok" class="form-check-input" title="W sumie to nawet nie musisz sie zgadzac bo warunki nie istnieją">
+                            Zgadzam sie na warunki uzytkownika
+                        </label>
+                    </div>
+                </form>
+                <button class="btn btn-primary mt-4 col-4 offset-4">Zarejestruj</button>
+            }
+        </div>
+    </div>
+</div>
+
+@code {
+    bool logOrRej = true;
+}
