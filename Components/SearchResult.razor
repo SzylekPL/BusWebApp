@@ -1,9 +1,9 @@
 ﻿<div>
 	<input type="text" placeholder="@InputPlaceholder" @bind="InputValue"/>
 	<ul>
-		@foreach (string r in SearchResults.Where(x=>x.Contains(InputValue)))
+		@foreach (string result in SearchResults.Where(x=>x.Contains(InputValue)))
 		{
-			<li>r</li>
+			<li>result</li>
 		}
 	</ul>
 </div>
