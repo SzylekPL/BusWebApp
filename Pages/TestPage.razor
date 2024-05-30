@@ -1,0 +1,13 @@
+﻿@page "/test"
+@using BusWebApp.Components
+<h3>TestPage</h3>
+<SearchResult TagValuePairs="content"/>
+@code {
+	private readonly Dictionary<string, string> content = new()
+	{
+		{"E","e"},
+		{"e","e"},
+		{"G","g"},
+		{"g","g"},
+	};
+}
