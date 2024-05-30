@@ -2,10 +2,53 @@
 
 <div class="container">
 	<div class="row">
-		<button class="button-log-in">Loguj</button>
+		<div class="col-12 border rounded mt-3 pb-4">
+			<ul class="pagination pagination-lg text-center">
+				<li class="page-item page-link col-6" @onclick="() => { SwitchTick = true; }">Kup bilet</li>
+				<li class="page-item page-link col-6" @onclick="() => { SwitchTick = false; }">Twoje bilety</li>
+			</ul>
+		
+			@if (SwitchTick)
+			{
+				<h2 class="display-4 text-center">Kup bilet</h2>
+				<div class="row mt-5">
+					<div class="form-group col-6 offset-3">
+						<label for="TicketDate">Data biletu</label>
+						<input type="date" value="@DateTime.Now.ToString("yyyy-MM-dd")" id="TicketDate" class="form-control">
+					</div>
+				</div>
+				<div class="row">
+					<div class="form-group col-6 offset-3">
+						<label for="TicketDiscount">Zniżki</label>
+						<select class="form-control" id="TicketDiscount">
+							<option>Brak</option>
+							<option>Uczniowska (do 24 lat)</option>
+							<option>Studencka (do 26 lat)</option>
+							<option>Seniorska (65+ lat)</option>
+							<option>Weteran wojenny</option>
+						</select>
+					</div>
+				</div>
+				<button class="btn btn-primary col-4 offset-4 mt-3 button-buy-ticket">Kup bilet</button>
+				<div class="container pt-4 col-8 offset-2 mt-4 d-none" id="TicketSuccess">
+					<div class="alert alert-info" role="alert">
+						Pomyslnie zakupiono bilet
+					</div>
+				</div>
+				<div class="container pt-4 col-8 offset-2 mt-4 d-none" id="TicketError">
+					<div class="alert alert-danger" role="alert">
+						Użytkownik nie jest zalogowany
+					</div>
+				</div>
+			}
+			else
+			{
+				<h2 class="display-4 text-center">Twoje bilety</h2>
+			}
+		</div>
 	</div>
 </div>
 
 @code {
-
+	public bool SwitchTick = true;
 }

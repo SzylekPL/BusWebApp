@@ -31,16 +31,23 @@
         const BuyTicket = () => {
             
             const database = getDatabase(app);
+            try {
+                const reference = ref(database, 'tickets/' + `${auth.currentUser.uid}`);
 
-            const reference = ref(database, 'tickets/' + "jakisUser");
+                set(reference, {
+                    ticketNumber: "s",
+                    discount: ""
+                });
+                console.log("Bilet kupiony");
+                document.getElementById("TicketSuccess").classList.remove('d-none');
+                document.getElementById("TicketError").classList.add('d-none');
+            }
+            catch(error){
+                document.getElementById("TicketSuccess").classList.add('d-none');
+                document.getElementById("TicketError").classList.remove('d-none');
+                console.log(error.code);
+            }
 
-            set(reference, {
-                username: "",
-                ticketNumber: "",
-                discount: ""
-            });
-
-            console.log("Bilet kupiony");
         }
 
         const LogIn = async () => {
@@ -49,12 +56,12 @@
             try {
                 const userCredential = await signInWithEmailAndPassword(auth, login, password)
                 console.log(userCredential.user);
-                document.getElementById("LoginError").style.display = "none";
-                document.getElementById("LoginSuccess").style.display = "block";
+                document.getElementById("LoginError").classList.add('d-none');
+                document.getElementById("LoginSuccess").classList.remove('d-none');
             } catch (error) {
                 console.log(error.code);
-                document.getElementById("LoginError").style.display = "block";
-                document.getElementById("LoginSuccess").style.display = "none";
+                document.getElementById("LoginError").classList.remove('d-none');
+                document.getElementById("LoginSuccess").classList.add('d-none');
             }
 
         }
