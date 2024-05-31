@@ -1,17 +1,28 @@
 ﻿<div>
-	<input type="text" placeholder="@InputPlaceholder" @bind="InputValue"/>
-		@foreach (KeyValuePair<string,string> result in TagValuePairs.Where(x=>x.Key.Contains(InputValue)))
-		{
-			<div @onclick="()=>OnResultClick(result.Value)">@result.Key</div>
-		}
+	<input type="text" placeholder="@InputPlaceholder" @oninput="UpdateResults" />
+	@foreach (KeyValuePair<string, string> result in GetResults())
+	{
+		<div @onclick="()=>OnResultClick(result.Value)">
+			<div>@result.Value</div>
+			<div>By tag: @result.Key</div>
+		</div>
+	}
 </div>
 
 @code {
-	private string InputValue;
+	private string InputValue = string.Empty;
+	private Dictionary<string, string> GetResults() => InputValue != string.Empty ? TagValuePairs.Where(x => x.Key.Contains(InputValue)).ToDictionary(x => x.Key, x => x.Value) : new();
+	private void UpdateResults(ChangeEventArgs e)
+	{
+		InputValue = e.Value.ToString();
+		StateHasChanged();
+	}
+
+	[Parameter]
+	[EditorRequired]
+	public Dictionary<string, string> TagValuePairs { get; set; }
 	[Parameter]
 	public string InputPlaceholder { get; set; } = "Search...";
-	[Parameter]
-	public Dictionary<string,string> TagValuePairs { get; set; }
 	[Parameter]
 	public EventCallback<string> ResultSelected { get; set; }
 	private async Task OnResultClick(string resultText) => await ResultSelected.InvokeAsync(resultText);
