@@ -31,16 +31,28 @@
         const BuyTicket = () => {
             
             const database = getDatabase(app);
+            try {
+                const now = new Date();
+                const rightNow = `${now.getFullYear()}${String(now.getMonth() + 1).padStart(2, '0')}${String(now.getDate()).padStart(2, '0')}${String(now.getHours()).padStart(2, '0')}${String(now.getMinutes()).padStart(2, '0')}${String(now.getSeconds()).padStart(2, '0')}`;
+                const todaysDate = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
+                const reference = ref(database, 'tickets/' + `${auth.currentUser.uid}/` + `${rightNow}`);
+                const ticketdate = document.getElementById("TicketDate").value;
+                const discount = document.getElementById("TicketDiscount").value;
+                set(reference, {
+                    ticketDate: ticketdate,
+                    discount: discount,
+                    purchaseDate : todaysDate
+                });
+                console.log("Bilet kupiony");
+                document.getElementById("TicketSuccess").classList.remove('d-none');
+                document.getElementById("TicketError").classList.add('d-none');
+            }
+            catch(error){
+                document.getElementById("TicketSuccess").classList.add('d-none');
+                document.getElementById("TicketError").classList.remove('d-none');
+                console.log(error.code);
+            }
 
-            const reference = ref(database, 'tickets/' + "jakisUser");
-
-            set(reference, {
-                username: "",
-                ticketNumber: "",
-                discount: ""
-            });
-
-            console.log("Bilet kupiony");
         }
 
         const LogIn = async () => {
@@ -49,14 +61,29 @@
             try {
                 const userCredential = await signInWithEmailAndPassword(auth, login, password)
                 console.log(userCredential.user);
-                document.getElementById("LoginError").style.display = "none";
-                document.getElementById("LoginSuccess").style.display = "block";
+                document.getElementById("LoginError").classList.add('d-none');
+                document.getElementById("LoginSuccess").classList.remove('d-none');
             } catch (error) {
                 console.log(error.code);
-                document.getElementById("LoginError").style.display = "block";
-                document.getElementById("LoginSuccess").style.display = "none";
+                document.getElementById("LoginError").classList.remove('d-none');
+                document.getElementById("LoginSuccess").classList.add('d-none');
             }
 
+        }
+
+        const SignUp = async () => {
+            const login = document.getElementById("RegisterEmail").value;
+            const password = document.getElementById("RegisterPassword").value;
+            try {
+                const userCredential = await createUserWithEmailAndPassword(auth, login, password)
+                console.log(userCredential.user);
+                document.getElementById("RegisterSuccess").classList.remove('d-none');
+                document.getElementById("RegisterError").classList.add('d-none');
+            } catch (error) {
+                console.log(error.code);
+                document.getElementById("RegisterError").classList.remove('d-none');
+                document.getElementById("RegisterSuccess").classList.adde('d-none');
+            }
         }
 
         const LogOut = async () => {
@@ -74,6 +101,10 @@
             else if (event.target.matches('.button-log-out')) {
                 console.log("wylogowanie");
                 LogOut();
+            }
+            else if (event.target.matches('.button-sign-up')) {
+                console.log("rejestracja");
+                SignUp();
             }
         });
     </script>

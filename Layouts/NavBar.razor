@@ -7,12 +7,12 @@
             <div class="navbar-nav mr-auto">
                 <a href="/" class="nav-link nav-item">Strona główna</a>
                 <a href="#" class="nav-link nav-item">Przystanki</a>
-                <a href="/Tickets" class="nav-link nav-item">Bielty</a>
+                <a href="/Tickets" class="nav-link nav-item">Bilety</a>
                 <a href="/LineVisualization" class="nav-link nav-item">Linie</a>
                 <a href="/LoginPage" class="nav-link nav-item">Konto</a>
             </div>
             <span class="navbar-text">
-                @DateTime.Today.Date.ToString("yyyy-MM-dd");
+                @DateTime.Now.ToString("yyyy-MM-dd")
             </span>
             <button class="btn btn-light col-2 ml-4 button-log-out">Wyloguj</button>
         </div>
