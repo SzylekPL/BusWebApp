@@ -32,11 +32,16 @@
             
             const database = getDatabase(app);
             try {
-                const reference = ref(database, 'tickets/' + `${auth.currentUser.uid}`);
-
+                const now = new Date();
+                const rightNow = `${now.getFullYear()}${String(now.getMonth() + 1).padStart(2, '0')}${String(now.getDate()).padStart(2, '0')}${String(now.getHours()).padStart(2, '0')}${String(now.getMinutes()).padStart(2, '0')}${String(now.getSeconds()).padStart(2, '0')}`;
+                const todaysDate = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
+                const reference = ref(database, 'tickets/' + `${auth.currentUser.uid}/` + `${rightNow}`);
+                const ticketdate = document.getElementById("TicketDate").value;
+                const discount = document.getElementById("TicketDiscount").value;
                 set(reference, {
-                    ticketNumber: "s",
-                    discount: ""
+                    ticketDate: ticketdate,
+                    discount: discount,
+                    purchaseDate : todaysDate
                 });
                 console.log("Bilet kupiony");
                 document.getElementById("TicketSuccess").classList.remove('d-none');
@@ -66,6 +71,21 @@
 
         }
 
+        const SignUp = async () => {
+            const login = document.getElementById("RegisterEmail").value;
+            const password = document.getElementById("RegisterPassword").value;
+            try {
+                const userCredential = await createUserWithEmailAndPassword(auth, login, password)
+                console.log(userCredential.user);
+                document.getElementById("RegisterSuccess").classList.remove('d-none');
+                document.getElementById("RegisterError").classList.add('d-none');
+            } catch (error) {
+                console.log(error.code);
+                document.getElementById("RegisterError").classList.remove('d-none');
+                document.getElementById("RegisterSuccess").classList.adde('d-none');
+            }
+        }
+
         const LogOut = async () => {
             await signOut(auth);
         }
@@ -81,6 +101,10 @@
             else if (event.target.matches('.button-log-out')) {
                 console.log("wylogowanie");
                 LogOut();
+            }
+            else if (event.target.matches('.button-sign-up')) {
+                console.log("rejestracja");
+                SignUp();
             }
         });
     </script>

@@ -2,7 +2,7 @@
 
 <div class="container">
 	<div class="row">
-		<div class="col-12 border rounded mt-3 pb-4">
+		<div class="col-10 offset-1 border rounded mt-3 pb-4">
 			<ul class="pagination pagination-lg text-center">
 				<li class="page-item page-link col-6" @onclick="() => { SwitchTick = true; }">Kup bilet</li>
 				<li class="page-item page-link col-6" @onclick="() => { SwitchTick = false; }">Twoje bilety</li>
@@ -12,15 +12,15 @@
 			{
 				<h2 class="display-4 text-center">Kup bilet</h2>
 				<div class="row mt-5">
-					<div class="form-group col-6 offset-3">
+					<div class="form-group col-8 offset-2">
 						<label for="TicketDate">Data biletu</label>
-						<input type="date" value="@DateTime.Now.ToString("yyyy-MM-dd")" id="TicketDate" class="form-control">
+						<input type="date" value="@DateTime.Now.ToString("yyyy-MM-dd")" id="TicketDate" class="form-control form-control-lg">
 					</div>
 				</div>
 				<div class="row">
-					<div class="form-group col-6 offset-3">
+					<div class="form-group col-8 offset-2">
 						<label for="TicketDiscount">Zniżki</label>
-						<select class="form-control" id="TicketDiscount">
+						<select class="form-control form-control-lg" id="TicketDiscount">
 							<option>Brak</option>
 							<option>Uczniowska (do 24 lat)</option>
 							<option>Studencka (do 26 lat)</option>
@@ -29,7 +29,7 @@
 						</select>
 					</div>
 				</div>
-				<button class="btn btn-primary col-4 offset-4 mt-3 button-buy-ticket">Kup bilet</button>
+				<button class="btn btn-primary col-4 offset-4 mt-4 button-buy-ticket">Kup bilet</button>
 				<div class="container pt-4 col-8 offset-2 mt-4 d-none" id="TicketSuccess">
 					<div class="alert alert-info" role="alert">
 						Pomyslnie zakupiono bilet
@@ -44,6 +44,18 @@
 			else
 			{
 				<h2 class="display-4 text-center">Twoje bilety</h2>
+				<button class="btn btn-primary col-4 offset-4 show-tickets" @onclick="() => { ShowTick=true; }">Pokaż bielty</button>
+				@if (ShowTick)
+				{
+					<table class="my-5 table table-sm table-striped table-hover">
+						<tr>
+							<th>Numer</th>
+							<th>Data biletu</th>
+							<th>Zniżka</th>
+							<th>Data zakupu</th>
+						</tr>
+					</table>
+				}
 			}
 		</div>
 	</div>
@@ -51,4 +63,5 @@
 
 @code {
 	public bool SwitchTick = true;
+	public bool ShowTick = false;
 }
