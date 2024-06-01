@@ -4,7 +4,7 @@
 	<div class="row">
 		<div class="col-10 offset-1 border rounded mt-3 pb-4">
 			<ul class="pagination pagination-lg text-center">
-				<li class="page-item page-link col-6" @onclick="() => { SwitchTick = true; }">Kup bilet</li>
+				<li class="page-item page-link col-6" @onclick="() => { SwitchTick = true; ShowTick=false; }">Kup bilet</li>
 				<li class="page-item page-link col-6" @onclick="() => { SwitchTick = false; }">Twoje bilety</li>
 			</ul>
 		
@@ -14,7 +14,7 @@
 				<div class="row mt-5">
 					<div class="form-group col-8 offset-2">
 						<label for="TicketDate">Data biletu</label>
-						<input type="date" value="@DateTime.Now.ToString("yyyy-MM-dd")" id="TicketDate" class="form-control form-control-lg">
+						<input type="date" value="@DateTime.Now.ToString("yyyy-MM-dd")" min="@DateTime.Now.ToString("yyyy-MM-dd")" id="TicketDate" class="form-control form-control-lg">
 					</div>
 				</div>
 				<div class="row">
@@ -43,11 +43,14 @@
 			}
 			else
 			{
-				<h2 class="display-4 text-center">Twoje bilety</h2>
-				<button class="btn btn-primary col-4 offset-4 show-tickets" @onclick="() => { ShowTick=true; }">Pokaż bielty</button>
+				<h2 class="display-4 text-center mb-5">Twoje bilety</h2>
+				@if (!ShowTick)
+				{
+					<button class="btn btn-primary col-4 offset-4 show-tickets" @onclick="() => { ShowTick=true; }">Pokaż bielty</button>
+				}
 				@if (ShowTick)
 				{
-					<table class="my-5 table table-sm table-striped table-hover">
+					<table class="my-5 border table table-striped table-hover" id="TicketTable">
 						<tr>
 							<th>Numer</th>
 							<th>Data biletu</th>
@@ -56,6 +59,11 @@
 						</tr>
 					</table>
 				}
+				<div class="container pt-4 d-none" id="TicketsError">
+					<div class="alert alert-danger" role="alert">
+						Aby zoabczyć swoje bilety musisz byc zalogowany!
+					</div>
+				</div>
 			}
 		</div>
 	</div>
