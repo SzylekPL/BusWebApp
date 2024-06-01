@@ -1,0 +1,32 @@
+﻿@page "/StopPointsPage";
+
+<div class="container">
+	<div class="row">
+		<div class="col-12">
+			<h2 class="display-4 text-center my-4">Wyszukaj przystanek</h2>
+			<div class="col-8 offset-2 mt-3">
+				<BusWebApp.Components.SearchResult ResultSelected="Callback" InputPlaceholder="Wyszukaj przystanek..." TagValuePairs="StopPointDict" />
+			</div>
+		</div>
+	</div>
+</div>
+@code {
+	Dictionary<string, string> StopPointDict = new Dictionary<string, string>();
+
+
+	protected override void OnInitialized()
+	{
+		foreach (var x in JsonService.StopPoints){
+			if (!StopPointDict.ContainsKey(x.Name))
+			{
+				StopPointDict.Add(x.Name, x.Symbol);
+			}
+		} 
+	}
+
+	public void Callback(string e)
+	{
+		//tutaj trzeba pobrac info o wybranym przsytanku
+		Console.WriteLine("kalbak");
+	}
+}
