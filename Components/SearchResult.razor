@@ -1,17 +1,20 @@
 ﻿<div>
 	<input type="text" placeholder="@InputPlaceholder" @oninput="UpdateResults" />
-	@foreach (KeyValuePair<string, string> result in GetResults())
+	@if(InputValue != string.Empty)
 	{
-		<div @onclick="()=>OnResultClick(result.Value)">
-			<div>@result.Value</div>
-			<div>By tag: @result.Key</div>
-		</div>
+		@foreach (KeyValuePair<string, string> result in GetResults())
+		{
+			<div @onclick="()=>OnResultClick(result.Value)">
+				<div>@result.Value</div>
+				<div>By tag: @result.Key</div>
+			</div>
+		}
 	}
 </div>
 
 @code {
 	private string InputValue = string.Empty;
-	private Dictionary<string, string> GetResults() => InputValue != string.Empty ? TagValuePairs.Where(x => x.Key.Contains(InputValue)).ToDictionary(x => x.Key, x => x.Value) : new();
+	private Dictionary<string, string> GetResults() => TagValuePairs.Where(x => x.Key.Contains(InputValue)).ToDictionary(x => x.Key, x => x.Value);
 	private void UpdateResults(ChangeEventArgs e)
 	{
 		InputValue = e.Value.ToString();

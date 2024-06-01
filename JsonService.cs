@@ -1,13 +1,10 @@
-﻿using BusWebApp.Models;
-using Microsoft.JSInterop;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 
 namespace BusWebApp.Models
 {
 	internal static class JsonService
 	{
 		private static readonly HttpClient _client = new();
-		private static bool _initialized = false;
 
 		public static StopPoint[] StopPoints { get; private set; }
 		public static Line[] Lines { get; private set; }
@@ -16,8 +13,6 @@ namespace BusWebApp.Models
 
 		public static async Task Initialize()
 		{
-			if (_initialized) return;
-			_initialized = true;
 			HttpResponseMessage response = await _client.GetAsync("https://rozklady.bielsko.pl/getStops.json");
 			string content = await response.Content.ReadAsStringAsync();
 			StopPoints = JsonConvert.DeserializeObject<StopPointWrapper>(content).Content;
@@ -30,8 +25,8 @@ namespace BusWebApp.Models
 			content = await response.Content.ReadAsStringAsync();
 			Lines = JsonConvert.DeserializeObject<LineWrapper>(content).Content;
 
-            SearchTags = StopPoints.ToDictionary(x => x, x => ($"Numer: {x.Symbol}", $"Nazwa: {x.Name}", $"Ulica: {x.Street}"));
-	}
+			SearchTags = StopPoints.ToDictionary(x => x, x => ($"Numer: {x.Symbol}", $"Nazwa: {x.Name}", $"Ulica: {x.Street}"));
+		}
 
 		public static async Task<StopPointInfo> GetPointInfo(string symbol)
 		{
