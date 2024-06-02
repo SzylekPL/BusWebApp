@@ -9,9 +9,6 @@ namespace BusWebApp.Models
 		private static readonly List<IVehicleSubscriber> Subscribers = new();
 
 		private static Timer ApiRequestTimer;
-		private static RunningVehicle[] runningVehicles = Array.Empty<RunningVehicle>();
-
-		public static RunningVehicle[] RunningVehicles => runningVehicles;
 
 		public static StopPoint[] StopPoints { get; private set; }
 		public static Line[] Lines { get; private set; }
@@ -24,6 +21,7 @@ namespace BusWebApp.Models
 		public static async Task Initialize()
 		{
 			HttpResponseMessage response;
+			RunningVehicle[] runningVehicles;
 			string content;
 
 			response = await _client.GetAsync("https://rozklady.bielsko.pl/getStops.json");
@@ -48,7 +46,7 @@ namespace BusWebApp.Models
 					content = await response.Content.ReadAsStringAsync();
 					runningVehicles = JsonConvert.DeserializeObject<RunningVehicleWrapper>(content).Content;
 					foreach (IVehicleSubscriber s in Subscribers)
-						s.OnUpdate();
+						s.OnUpdate(runningVehicles);
 				}
 			}
 			ApiRequestTimer = new(async _ => await CallApi(), null, 0, 10000);
