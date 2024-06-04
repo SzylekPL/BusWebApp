@@ -8,11 +8,25 @@
 				<BusWebApp.Components.SearchResult ResultSelected="Callback" InputPlaceholder="Wyszukaj przystanek..." TagValuePairs="StopPointDict" />
 			</div>
 		</div>
+		<div class="col-8 offset-2">
+			@if (PointInfo.Departures is not null)
+			{
+				<h2 class="text-center mt-4 mb-3">@PointInfo.Name</h2>
+				@foreach(var x in PointInfo.Departures)
+				{
+					<div class="border rounded p-2 m-1">
+						<div class="">Kierunek: @x.DirectionName</div>
+						<div class="">Numer linii: @x.LineName</div>
+						<div>Odjazd o: @(Math.Round(((double)x.ScheduledDepartureSec/3600),2))</div>
+					</div>
+				}
+			}
+		</div>
 	</div>
 </div>
 @code {
 	Dictionary<string, string> StopPointDict = new Dictionary<string, string>();
-
+	StopPointInfo PointInfo = new();
 
 	protected override void OnInitialized()
 	{
@@ -24,9 +38,9 @@
 		} 
 	}
 
-	public void Callback(string e)
+	public async void Callback(string e)
 	{
-		//tutaj trzeba pobrac info o wybranym przsytanku
-		Console.WriteLine("kalbak");
+		PointInfo = await JsonService.GetPointInfo(e);
+		Console.WriteLine(PointInfo.Name);
 	}
 }

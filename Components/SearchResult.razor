@@ -4,7 +4,7 @@
 	{
 		@foreach (KeyValuePair<string, string> result in GetResults())
 		{
-			<div class="border rounded m-1" @onclick="()=>OnResultClick(result.Value)">
+			<div class="border rounded m-1" @onclick="async()=>await OnResultClick(result.Value)">
 				<div class="m-1">@result.Key</div>
 				<div class="m-1">Numer przystanku: @result.Value</div>
 			</div>
@@ -28,5 +28,9 @@
 	public string InputPlaceholder { get; set; } = "Search...";
 	[Parameter]
 	public EventCallback<string> ResultSelected { get; set; }
-	private async Task OnResultClick(string resultText) => await ResultSelected.InvokeAsync(resultText);
+	private async Task OnResultClick(string resultText){
+
+		InputValue = "";
+		await ResultSelected.InvokeAsync(resultText);
+	}
 }
