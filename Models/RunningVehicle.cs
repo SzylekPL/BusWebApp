@@ -17,4 +17,9 @@ namespace BusWebApp.Models
 		[JsonProperty("optionalDirection")]
 		public string Direction { get; set; }
 	}
+	public class RunningVehicleWrapper
+	{
+		[JsonProperty("vehicles")]
+		public RunningVehicle[] Content { get; set; }
+	}
 }
